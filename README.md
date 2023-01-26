@@ -10,7 +10,7 @@
     - [Introdução](#introdução)
     - [Build configuration](#build-configuration)
     - [Como baixar ? ](#como-baixar-e-rodar-este-projeto)
-    - [Quem sou eu ? ](#conhea-mais-sobre-mim)
+ 
 
 ## Introdução
 
