@@ -23,7 +23,7 @@ Gostaria de apresentar o projeto SumaxSoft desenvolvido para o teste tecnico par
 Foi utilizado uma arquitetura REST e os métodos HTTP padrão 
 (GET, POST, PUT e DELETE) para disponibilizar essas funcionalidades. 
 
-O modelo de dados dessa API inclui dois tipos de recursos: clientes e serviços prestados. Cada cliente possui um ID único, nome, sobrenome, cpf, cidade, telefone e celular.  Já os serviços prestados possuem um ID único, uma descrião, um cliente associado, valor do serviço prestado e a data, cep.
+O modelo de dados dessa API inclui dois tipos de recursos: clientes e serviços prestados. Cada cliente possui um ID único, nome, sobrenome, cpf, cidade, telefone e celular.  Já os serviços prestados possuem um ID único, uma descrião, um cliente associado, valor do serviço prestado e a data.
 
 API  possui um relacionamento de entidade entre os recursos de clientes (clients) e serviços prestados (ServiceProvided).
 
