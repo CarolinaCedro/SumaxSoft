@@ -4,12 +4,9 @@ import io.github.CarolinaCedro.sumaxSoft.aplication.dto.requests.ClientRequest;
 import io.github.CarolinaCedro.sumaxSoft.aplication.dto.responses.ClientResponse;
 import io.github.CarolinaCedro.sumaxSoft.aplication.service.impl.ClientServiceImpl;
 import io.github.CarolinaCedro.sumaxSoft.config.modelMapper.ModelMapperConfig;
-import io.github.CarolinaCedro.sumaxSoft.model.Client;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -20,11 +17,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.Optional;
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@Api(value="Api para SumaxSoft(Test MaxSoft)")
+@Api(value="Clientes")
 @RequestMapping("/api/clients")
 public class ClientController {
 
@@ -36,6 +33,12 @@ public class ClientController {
     public ResponseEntity<Page<ClientResponse>> getAll(@PageableDefault(page = 0, size = 15, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(clientService.getAll(pageable));
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<List<ClientResponse>> getByNameFilter(@RequestParam("name") String name) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(clientService.findCustomerByName(name));
     }
 
     @GetMapping("/{id}")

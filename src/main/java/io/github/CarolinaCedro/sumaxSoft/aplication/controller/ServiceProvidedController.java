@@ -1,50 +1,49 @@
 package io.github.CarolinaCedro.sumaxSoft.aplication.controller;
 
+import io.github.CarolinaCedro.sumaxSoft.aplication.dto.requests.ServiceProvidedDtoRequest;
+import io.github.CarolinaCedro.sumaxSoft.aplication.dto.responses.ServiceProvidedDtoResponse;
+import io.github.CarolinaCedro.sumaxSoft.aplication.service.impl.ServiceProvidedServiceImpl;
+import io.github.CarolinaCedro.sumaxSoft.aplication.utils.BigDecimalConverter;
+import io.github.CarolinaCedro.sumaxSoft.config.modelMapper.ModelMapperConfig;
+import io.github.CarolinaCedro.sumaxSoft.model.ServiceProvided;
 import io.github.CarolinaCedro.sumaxSoft.repository.ClientRepository;
+import io.github.CarolinaCedro.sumaxSoft.repository.ServiceProvidedRepository;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/servicos-prestados")
+@Api(value="Serviços prestados")
 @RequiredArgsConstructor
 public class ServiceProvidedController  {
 
     private final ClientRepository clienteRepository;
-    private final ServicoPrestadoRepository repository;
-    private final BigDecimalConverter bigDecimalConverter;
+    private final ServiceProvidedServiceImpl service;
+    private final ModelMapperConfig mapper;
+    private final ServiceProvidedRepository serviceProvidedRepository;
+
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Ser salvar( @RequestBody @Valid ServicoPrestadoDTO dto ){
-        LocalDate data = LocalDate.parse(dto.getData(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        Integer idCliente = dto.getIdCliente();
-
-        Cliente cliente =
-                clienteRepository
-                        .findById(idCliente)
-                        .orElseThrow(() ->
-                                new ResponseStatusException(
-                                        HttpStatus.BAD_REQUEST, "Cliente inexistente."));
-
-
-        ServicoPrestado servicoPrestado = new ServicoPrestado();
-        servicoPrestado.setDescricao(dto.getDescricao());
-        servicoPrestado.setData( data );
-        servicoPrestado.setCliente(cliente);
-        servicoPrestado.setValor( bigDecimalConverter.converter(dto.getPreco())  );
-
-        return repository.save(servicoPrestado);
+    @ApiOperation(value = "Cria um serviço")
+    public ServiceProvidedDtoResponse saveServiceProvided(@RequestBody @Valid ServiceProvidedDtoRequest serviceProvidedDtoRequest){
+        ServiceProvidedDtoResponse serviceProvided = service.saveServiceProvided(serviceProvidedDtoRequest);
+        return mapper.convert().map(serviceProvided,ServiceProvidedDtoResponse.class);
     }
 
     @GetMapping
-    public List<ServicoPrestado> pesquisar(
+    public List<ServiceProvidedDtoResponse> searchServiceProvided(
             @RequestParam(value = "nome", required = false, defaultValue = "") String nome,
             @RequestParam(value = "mes", required = false) Integer mes
     ) {
-        return repository.findByNomeClienteAndMes("%" + nome + "%", mes);
+        return service.searchServiceProvided(nome,mes);
     }
+
 }

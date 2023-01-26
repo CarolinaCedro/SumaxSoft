@@ -1,5 +1,6 @@
 package io.github.CarolinaCedro.sumaxSoft.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,8 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.sql.Timestamp;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table
@@ -59,7 +59,13 @@ public class Client {
     @Size(min = 7, max = 30, message = "{campo.logradouro.size}")
     private String email;
 
-    @Column(columnDefinition = "TIMESTAMP")
-    private Timestamp creationService;
+    @Column(name = "date_register", updatable = false)
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate dataRegister;
+
+    @PrePersist
+    public void prePersist(){
+        setDataRegister(LocalDate.now());
+    }
 
 }

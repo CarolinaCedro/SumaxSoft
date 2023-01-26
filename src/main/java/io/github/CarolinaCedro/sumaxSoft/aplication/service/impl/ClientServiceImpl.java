@@ -22,7 +22,9 @@ import org.springframework.util.Assert;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -46,12 +48,15 @@ public class ClientServiceImpl implements ClientService {
         return page.map(this::dto);
     }
 
-    public Optional<ClientResponse> getById(Long id) {
-        return clientRepository.findById(id).map(this::convertClient);
+    @Override
+    public List<ClientResponse> findCustomerByName(String name) {
+        return clientRepository.findByNameIsLikeIgnoreCase("%" + name + "%").stream().map(this::convertClient).collect(Collectors.toList());
     }
 
 
-
+    public Optional<ClientResponse> getById(Long id) {
+        return clientRepository.findById(id).map(this::convertClient);
+    }
 
     @Override
     @Transactional

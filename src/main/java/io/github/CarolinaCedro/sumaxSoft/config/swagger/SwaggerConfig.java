@@ -31,7 +31,7 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()
                 .contact(new Contact("Carolina Cedro", "https://github.com/CarolinaCedro", "carolcedropessoal@gmail.com"))
                 .title("SumaxSoft(MaxSoft Teste")
-                .description("Documentação API Clientes")
+                .description("Documentação API teste empresa MaxSoft")
                 .version("1.0")
                 .build();
 
