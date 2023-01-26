@@ -3,8 +3,12 @@ package io.github.CarolinaCedro.sumaxSoft.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -18,12 +22,41 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false, length = 20)
+    @NotNull(message = "{campo.name.obrigatorio}")
+    @Size(min = 3, max = 20, message = "{campo.name.size}")
     private String name;
+
+    @Column(nullable = false, length = 20)
+    @NotNull(message = "{campo.lastName.obrigatorio}")
+    @Size(min = 3, max = 20, message = "{campo.lastName.size}")
     private String lastName;
+
+    @Column(nullable = false, length = 11)
+    @NotNull(message = "{campo.logradouro.obrigatorio}")
+    @Size(min = 11, max = 11, message = "{campo.logradouro.size}")
+    @CPF
     private String cpf;
+
+    @Column(nullable = false, length = 50)
+    @NotNull(message = "{campo.city.obrigatorio}")
+    @Size(min = 4, max = 50, message = "{campo.city.size}")
     private String city;
+
+    @Column(nullable = false, length = 20)
+    @NotNull(message = "{campo.telephone.obrigatorio}")
+    @Size(min = 7, max = 20, message = "{campo.telephone.size}")
     private String telephone;
+
+    @Column(nullable = false, length = 50)
+    @NotNull(message = "{campo.celullar.obrigatorio}")
+    @Size(min = 7, max = 20, message = "{campo.celullar.size}")
     private String celullar;
+
+    @Column(nullable = false, length = 30)
+    @Email
+    @NotNull(message = "{campo.logradouro.obrigatorio}")
+    @Size(min = 7, max = 30, message = "{campo.logradouro.size}")
     private String email;
 
     @Column(columnDefinition = "TIMESTAMP")
