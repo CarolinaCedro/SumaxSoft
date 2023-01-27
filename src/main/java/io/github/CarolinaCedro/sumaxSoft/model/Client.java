@@ -1,6 +1,7 @@
 package io.github.CarolinaCedro.sumaxSoft.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -69,6 +70,7 @@ public class Client {
     private LocalDate date_register;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<ServiceProvided> items = new ArrayList<>();
 
 
