@@ -2,8 +2,10 @@ package io.github.CarolinaCedro.sumaxSoft.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
@@ -11,12 +13,15 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Client {
 
     @Id
@@ -61,11 +66,16 @@ public class Client {
 
     @Column(name = "date_register", updatable = false)
     @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate dataRegister;
+    private LocalDate date_register;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ServiceProvided> items = new ArrayList<>();
+
+
 
     @PrePersist
     public void prePersist(){
-        setDataRegister(LocalDate.now());
+        setDate_register(LocalDate.now());
     }
 
 }

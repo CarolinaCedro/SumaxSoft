@@ -22,6 +22,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @Api(value="Clientes")
+@CrossOrigin("http://localhost:4200")
 @RequestMapping("/api/clients")
 public class ClientController {
 
@@ -51,8 +52,8 @@ public class ClientController {
     @PostMapping
     @ApiOperation(value = "Cria um cliente")
     public ResponseEntity<ClientResponse>saveClient(@RequestBody @Valid ClientRequest request) throws IOException {
-        clientService.save(request);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        ClientResponse newAddress = clientService.save(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.convert().map(newAddress,ClientResponse.class));
     }
 
     @PutMapping("/{id}")
