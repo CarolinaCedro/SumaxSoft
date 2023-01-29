@@ -14,7 +14,7 @@
 
 ## Introdução
 
-Gostaria de apresentar o projeto SumaxSoft desenvolvido para o teste tecnico para a empresa MaxSoft, que permite gerenciar os clientes e serviços prestados de uma empresa. Com ela, é possível realizar as seguintes operações:
+Gostaria de apresentar o projeto SumaxxSoft desenvolvido para o teste tecnico para a empresa MaxSoft, que permite gerenciar os clientes e serviços prestados de uma empresa. Com ela, é possível realizar as seguintes operações:
 
 * Criar, ler, atualizar e excluir clientes;
 * Criar, ler serviços prestados;
